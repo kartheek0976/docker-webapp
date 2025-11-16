@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   app:
-    build: ./Docker-app
+    image: kartheek0976/priya:appdb
     container_name: app1
     ports:
       - "8081:8080"
@@ -19,7 +19,7 @@ services:
       - backend
 
   devopsdb:
-    build: ./Docker-db
+    image: kartheek0976/priya:dbimage
     container_name: devopsdb
     environment:
       MYSQL_ROOT_PASSWORD: devopspassword
