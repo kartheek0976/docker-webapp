@@ -1,36 +1,40 @@
-version: '3'
+version: "3.9"
+
 services:
-  vpronginx:
-    image: visualpath/vpronginx
-    ports:
-      - "80:80"
 
-  vproapp:
-    image: imranvisualpath/vproappfix
+  app:
+    build: ./Docker-app
+    container_name: app1
     ports:
-      - "8080:8080"
-
-  vprocache01:
-    image: memcached
-    ports:
-      - "11211:11211"
-
-  vpromq01:
-    image: rabbitmq
-    ports:
-      - "15672:15672"
+      - "8081:8080"
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      DB_HOST: devopsdb
+      DB_PORT: 3306
+      DB_NAME: accounts
+      DB_USER: vproapp
+      DB_PASSWORD: vproapp
+    depends_on:
+      - devopsdb
+    networks:
+      - backend
 
-  vprodb:
-    image: imranvisualpath/vprdbfix
+  devopsdb:
+    build: ./Docker-db
+    container_name: devopsdb
+    environment:
+      MYSQL_ROOT_PASSWORD: devopspassword
+      MYSQL_DATABASE: accounts
+      MYSQL_USER: vproapp
+      MYSQL_PASSWORD: vproapp
     ports:
       - "3306:3306"
     volumes:
-      - vprodbdata:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=vprodbpass
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend
+
+networks:
+  backend:
 
 volumes:
-  vprodbdata: {}
+  mysql_data:
