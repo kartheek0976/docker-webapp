@@ -91,12 +91,30 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 🔥 UPDATED MOCKITO FOR JAVA 17 (Replaces old version 1.9.5) -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.9.5</version>
+            <version>3.12.4</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Required for Mockito with Java 17 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>3.12.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Required to avoid Proxy/Mock crashes -->
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>3.3</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- END MOCKITO FIX -->
 
         <dependency>
             <groupId>org.springframework</groupId>
