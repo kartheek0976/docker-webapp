@@ -11,14 +11,14 @@ spec:
     metadata:
       labels:
         app: swiggy
-    spec:
-      imagePullSecrets:          # ✅ correct place
-        - name: dockerhub        # ✅ secret name
+    spec:       # ✅ secret name
       containers:
         - name: devops-container
           image: kartheek0976/priya:appimage
           ports:
             - containerPort: 8080
+      imagePullSecrets:          # ✅ correct place
+        - name: dockerhub 
 
 ---
 
