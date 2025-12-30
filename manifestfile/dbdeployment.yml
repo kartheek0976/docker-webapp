@@ -1,1 +1,31 @@
-
+apiVersion: apps/v1
+kind: StatefullSet        # ❌ spelling mistake
+metadata:
+  name: devopsdb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: devops-container
+          image: kartheek0976/priya:dbimage
+          ports:
+            - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysvc
+spec:
+  ClusterIp: none        # ❌ wrong key name
+  selector:
+    app: db
+  ports:
+    - port: 3306
+      targetPort: 3306
