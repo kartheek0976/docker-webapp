@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: StatefullSet        # ❌ spelling mistake
+kind: StatefulSet
 metadata:
   name: devopsdb
 spec:
+  serviceName: dbsvc          # ✅ REQUIRED
   replicas: 2
   selector:
     matchLabels:
@@ -12,20 +13,20 @@ spec:
       labels:
         app: db
     spec:
+      imagePullSecrets:
+        - name: dockerhub
       containers:
         - name: devops-container
           image: kartheek0976/priya:dbimage
           ports:
             - containerPort: 3306
-      imagePullSecrets:          # ✅ correct place
-        - name: dockerhub 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: dbsvc
 spec:
-  ClusterIp: none        # ❌ wrong key name
+  clusterIP: None              # ✅ correct
   selector:
     app: db
   ports:
